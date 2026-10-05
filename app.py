@@ -9,6 +9,7 @@ st.set_page_config(
     layout="wide"
 )
 
+
 # Title and description
 st.title("📈 AWS Market Data ETL Pipeline")
 st.markdown("Welcome to my portfolio web application! This app showcases financial market data processed through an automated AWS ETL pipeline.")
@@ -28,7 +29,7 @@ if data_source == "Processed Market Data":
     # Placeholder chart simulating market trends 
     # (Replace this later with your real data loaded via boto3 or pandas)
     chart_data = pd.DataFrame(
-        np.random.randn(20, 3).cumsum() + 100,
+        np.random.randn(20, 3).cumsum(axis=0) + 100,
         columns=['Asset A', 'Asset B', 'Asset C']
     )
     
