@@ -2,7 +2,7 @@ name: Market Data ETL Pipeline
 
 on:
   schedule:
-    - cron: '0 21 * * 1-5' # Runs Monday-Friday at 9 PM UTC
+    - cron: '*/5 * * * *'
   workflow_dispatch:        # Allows manual run from GitHub UI
 
 jobs:
