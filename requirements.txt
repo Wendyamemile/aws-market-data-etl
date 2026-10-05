@@ -1,0 +1,5 @@
+boto3
+yfinance
+pandas
+pyarrow
+fastparquet
