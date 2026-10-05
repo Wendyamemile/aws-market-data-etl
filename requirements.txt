@@ -1,6 +1,7 @@
 boto3
 yfinance
 pandas
+numpy
 pyarrow
 fastparquet
 streamlit
