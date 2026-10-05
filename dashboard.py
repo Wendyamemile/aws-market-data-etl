@@ -40,9 +40,9 @@ def run_query(query: str) -> pd.DataFrame:
     
     # 1. Lock the session to your exact keys and region
     session = boto3.Session(
-        aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
-        aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
-        region_name="us-east-2"
+        aws_access_key_id=AWS_ACCESS_KEY_ID,           # <-- Removed os.getenv()
+        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,   # <-- Removed os.getenv()
+        region_name=AWS_REGION                         # <-- Uses your region variable
     )
     
     # 2. Force the connection to use the primary workgroup and correct region
