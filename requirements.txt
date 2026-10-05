@@ -3,3 +3,7 @@ yfinance
 pandas
 pyarrow
 fastparquet
+streamlit
+pyathena
+plotly
+python-dotenv

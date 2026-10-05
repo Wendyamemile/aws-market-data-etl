@@ -2,9 +2,9 @@
 
 [![ETL Pipeline Status](https://github.com/Wendyamemile/aws-market-data-etl/actions/workflows/pipeline.yml/badge.svg)](https://github.com/Wendyamemile/aws-market-data-etl/actions)
 
-An automated, serverless ETL (Extract, Transform, Load) pipeline that ingests daily stock market data, processes it into an analytics-ready format, and stores it in an Amazon S3 Data Lake. 
+An automated, serverless ETL (Extract, Transform, Load) pipeline that ingests daily stock market data, processes it into an analytics-ready format, stores it in an Amazon S3 Data Lake, and visualizes it via an interactive Streamlit dashboard. 
 
-This project demonstrates core data engineering principles, including API integration, data lake architecture (Bronze/Silver zones), columnar data storage optimization, automated schema cataloging, and CI/CD workflow orchestration.
+This project demonstrates core data engineering principles, including API integration, data lake architecture (Bronze/Silver zones), columnar data storage optimization, automated schema cataloging, CI/CD workflow orchestration, and serverless data visualization.
 
 ---
 
@@ -24,8 +24,11 @@ This project implements a Data Lake architecture using Amazon S3, AWS Glue, and 
 4. **Analytics (Amazon Athena):**
    With the data cataloged, Amazon Athena provides a serverless SQL interface, allowing for instant, direct querying of the S3 market data without provisioning a database.
 
-5. **Orchestration:** 
-   The entire pipeline is fully automated using **GitHub Actions**. A cron schedule triggers the workflow every Monday through Friday at 9:00 PM UTC (after US markets close). 
+5. **Visualization (Dashboard):**
+   A Streamlit application (`dashboard.py`) securely connects to Athena to query the cleaned data in real-time, rendering interactive financial candlestick charts and moving averages using Plotly.
+
+6. **Orchestration:** 
+   The entire ETL pipeline is fully automated using **GitHub Actions**. A cron schedule triggers the workflow every Monday through Friday at 9:00 PM UTC (after US markets close). 
 
 ---
 
@@ -35,6 +38,7 @@ This project implements a Data Lake architecture using Amazon S3, AWS Glue, and 
 - **Cloud Provider:** Amazon Web Services (AWS)
 - **Storage & Analytics:** Amazon S3 (Data Lake), AWS Glue (Data Catalog), Amazon Athena (Serverless SQL)
 - **Data Processing:** Pandas, Boto3, yfinance
+- **Visualization & UI:** Streamlit, Plotly, PyAthena
 - **CI/CD & Orchestration:** GitHub Actions
 
 ---
@@ -47,9 +51,11 @@ aws-market-data-etl/
 ├── .github/workflows/
 │   └── pipeline.yml          # GitHub Actions orchestration schedule
 │
+├── dashboard.py              # Streamlit dashboard and Athena connection UI
 ├── extract_market_data.py    # Fetches data and loads raw JSON to S3 raw-zone
 ├── transform_clean_data.py   # Cleans data and saves as Parquet to S3 clean-zone
-├── main.py                   # Master script to run extraction, transformation, and trigger Glue Crawler
+├── main.py                   # Master script to run extraction, transformation, and trigger Glue
 ├── requirements.txt          # Python package dependencies
+├── .env                      # Local environment variables (ignored in Git)
 ├── .gitignore                # Ignored system, data, and environment files
 └── README.md                 # Project documentation
