@@ -1,6 +1,7 @@
 # AWS Market Data ETL Pipeline
 
 [![ETL Pipeline Status](https://github.com/Wendyamemile/aws-market-data-etl/actions/workflows/pipeline.yml/badge.svg)](https://github.com/Wendyamemile/aws-market-data-etl/actions)
+[![Live Demo](https://img.shields.io/badge/Live%20Dashboard-Streamlit-FF4B4B?style=for-the-badge&logo=streamlit)](https://aws-market-data-etl-3xnorj7ohfcxuxshp2o4iq.streamlit.app/)
 
 An automated, serverless ETL (Extract, Transform, Load) pipeline that ingests daily stock market data, processes it into an analytics-ready format, stores it in an Amazon S3 Data Lake, and visualizes it via an interactive Streamlit dashboard. 
 
@@ -8,7 +9,7 @@ This project demonstrates core data engineering principles, including API integr
 
 ---
 
-## 🏗️ Architecture and Workflow
+## 🏗️️ Architecture and Workflow
 
 This project implements a Data Lake architecture using Amazon S3, AWS Glue, and Amazon Athena:
 
@@ -25,7 +26,7 @@ This project implements a Data Lake architecture using Amazon S3, AWS Glue, and 
    With the data cataloged, Amazon Athena provides a serverless SQL interface, allowing for instant, direct querying of the S3 market data without provisioning a database.
 
 5. **Visualization (Dashboard):**
-   A Streamlit application (`dashboard.py`) securely connects to Athena to query the cleaned data in real-time, rendering interactive financial candlestick charts and moving averages using Plotly.
+   A Streamlit application (`dashboard.py`) securely connects to Athena to query the cleaned data in real-time, rendering interactive financial candlestick charts and moving averages using Plotly. The application is deployed globally via **Streamlit Community Cloud**.
 
 6. **Orchestration:** 
    The entire ETL pipeline is fully automated using **GitHub Actions**. A cron schedule triggers the workflow every Monday through Friday at 9:00 PM UTC (after US markets close). 
@@ -38,7 +39,7 @@ This project implements a Data Lake architecture using Amazon S3, AWS Glue, and 
 - **Cloud Provider:** Amazon Web Services (AWS)
 - **Storage & Analytics:** Amazon S3 (Data Lake), AWS Glue (Data Catalog), Amazon Athena (Serverless SQL)
 - **Data Processing:** Pandas, Boto3, yfinance
-- **Visualization & UI:** Streamlit, Plotly, PyAthena
+- **Visualization & UI:** Streamlit, Streamlit Community Cloud, Plotly, PyAthena
 - **CI/CD & Orchestration:** GitHub Actions
 
 ---
@@ -59,3 +60,57 @@ aws-market-data-etl/
 ├── .env                      # Local environment variables (ignored in Git)
 ├── .gitignore                # Ignored system, data, and environment files
 └── README.md                 # Project documentation
+```
+
+## 🚀 Getting Started & Local Setup
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/Wendyamemile/aws-market-data-etl.git
+cd aws-market-data-etl
+```
+
+### 2. Configure AWS Environment Variables
+```text
+Create a .env file in the root directory. (Note: The IAM user associated with these credentials must have read/write access to S3, and execution permissions for Glue and Athena).
+```
+
+```bash
+AWS_ACCESS_KEY_ID="your_access_key_here"
+AWS_SECRET_ACCESS_KEY="your_secret_key_here"
+AWS_DEFAULT_REGION="us-east-2"
+S3_BUCKET_NAME="market-data-lake-wendyam"
+```
+
+### 3. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Run the ETL Pipeline
+```text
+To populate your S3 bucket and trigger the Glue crawler locally:
+```
+
+```bash
+python main.py
+```
+
+### 5. Run the Dashboard Locally
+```bash
+streamlit run dashboard.py
+```
+
+### 🌐 Streamlit Cloud Deployment
+```text
+1. Connect your GitHub repository (aws-market-data-etl) to Streamlit Cloud.
+2. Set the Main file path to dashboard.py.
+3. Under App settings → Secrets, paste your AWS IAM credentials at the root level (no headers):
+```
+
+```toml
+AWS_ACCESS_KEY_ID = "your_access_key_here"
+AWS_SECRET_ACCESS_KEY = "your_secret_key_here"
+AWS_DEFAULT_REGION = "us-east-2"
+S3_BUCKET_NAME = "market-data-lake-wendyam"
+```
