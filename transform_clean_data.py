@@ -24,7 +24,7 @@ def get_s3_client():
 
 def transform_and_load(ticker_symbol: str):
     s3 = get_s3_client()
-    today_str = datetime.utcnow().strftime("%Y-%m-%d")
+    today_str = datetime.utcnow().strftime("%Y-%m-%d_%H%M%S")
     raw_key = f"raw-zone/{ticker_symbol}_raw_{today_str}.json"
 
     print(f"[*] Téléchargement de s3://{BUCKET_NAME}/{raw_key}...")
