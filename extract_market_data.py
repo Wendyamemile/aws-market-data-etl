@@ -1,5 +1,5 @@
 from datetime import datetime
-
+import os
 import json
 import boto3
 import yfinance as yf
