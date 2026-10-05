@@ -19,18 +19,8 @@ st.title("📈 Market Data Lake Analytics")
 st.caption("Live queries powered by Amazon Athena, AWS Glue & Amazon S3")
 
 # AWS Athena configuration
-# Try loading from Streamlit Cloud Secrets first, fall back to local .env (os.getenv)
-try:
-    AWS_ACCESS_KEY_ID = st.secrets["aws"]["aws_access_key_id"]
-    AWS_SECRET_ACCESS_KEY = st.secrets["aws"]["aws_secret_access_key"]
-    AWS_REGION = st.secrets["aws"].get("region_name", "us-east-2")
-    S3_BUCKET = "market-data-lake-wendyam"
-except Exception:
-    AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
-    AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-    AWS_REGION = os.getenv("AWS_DEFAULT_REGION", "us-east-2")
-    S3_BUCKET = os.getenv("S3_BUCKET_NAME", "market-data-lake-wendyam")
-
+AWS_REGION = os.getenv("AWS_DEFAULT_REGION", "us-east-2")
+S3_BUCKET = os.getenv("S3_BUCKET_NAME", "market-data-lake-wendyam")
 S3_STAGING_DIR = f"s3://{S3_BUCKET}/athena-results/"
 DATABASE_NAME = "market_data_db"
 
@@ -40,9 +30,9 @@ def run_query(query: str) -> pd.DataFrame:
     
     # 1. Lock the session to your exact keys and region
     session = boto3.Session(
-        aws_access_key_id=AWS_ACCESS_KEY_ID,           # <-- Removed os.getenv()
-        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,   # <-- Removed os.getenv()
-        region_name=AWS_REGION                         # <-- Uses your region variable
+        aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
+        aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
+        region_name="us-east-2"
     )
     
     # 2. Force the connection to use the primary workgroup and correct region
