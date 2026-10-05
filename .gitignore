@@ -1,3 +1,19 @@
-echo "__pycache__/" >> .gitignore
-echo ".venv/" >> .gitignore
-echo "data/" >> .gitignore
+# Ignore data folders
+data/
+*.csv
+*.json
+
+# Environment Variables
+.env
+
+# MacOS System Files
+.DS_Store
+
+# Python Cache
+__pycache__/
+*.pyc
+
+# Virtual Environments (if you ever use one)
+venv/
+env/
+.venv/
