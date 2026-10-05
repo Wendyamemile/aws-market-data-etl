@@ -1,5 +1,5 @@
 from datetime import datetime
-import os
+
 import json
 import boto3
 import yfinance as yf
@@ -25,7 +25,8 @@ def fetch_and_upload(ticker_symbol: str):
       "data": hist.to_dict(orient="records"),
   }
 
-  today_str = datetime.utcnow().strftime("%Y-%m-%d")
+  # Added %H%M%S to include Hour, Minute, and Second in the filename
+  today_str = datetime.utcnow().strftime("%Y-%m-%d_%H%M%S")
   s3_key = f"raw-zone/{ticker_symbol}_raw_{today_str}.json"
 
   s3 = boto3.client(
